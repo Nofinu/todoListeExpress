@@ -1,13 +1,21 @@
 import {Todo} from"./Todo.js"
+import fs from "fs"
 
 export class TodoList{
   constructor(){
     this.todoList=[]
+    this.file = "data.json"
   }
 
-  addTodo(titre,contenu,statut,date){
+  start(){
+    let myfile=fs.readFileSync(this.file).toString()
+    this.todoList = JSON.parse(myfile)
+  }
+
+  addTodo(titre,contenu,date){
     const id = Math.random().toString(16).slice(2)
-    this.todoList.push(new Todo(id,titre,contenu,statut,date))
+    this.todoList.push(new Todo(id,titre,contenu,date))
+    this.rewrite()
   }
 
   editTodo(id,titre,contenu,statut,date){
@@ -18,6 +26,7 @@ export class TodoList{
       todoFound.contenu = contenu? contenu : todoFound.contenu
       todoFound.statut = statut? statut : todoFound.statut
       todoFound.date = date? date : todoFound.date
+      this.rewrite()
       return true
     }
     return false
@@ -27,6 +36,7 @@ export class TodoList{
     const todoFound = this.findTodo(id)
     if(todoFound){
       todoFound.statut = !todoFound.statut
+      this.rewrite()
       return true
     }
     return false
@@ -36,6 +46,7 @@ export class TodoList{
     const todoFound = this.findTodo(id)
     if(todoFound){
       this.todoList = this.todoList.filter(todo => todo.id !=id)
+      this.rewrite()
       return true
     }
     return false
@@ -44,7 +55,7 @@ export class TodoList{
   searchTodo(titre){
     let tmptab =[]
     this.todoList.forEach(todo =>{
-      if(todo.titre === titre){
+      if(todo.titre.includes(titre)){
         tmptab.push(todo)
       }
     })
@@ -54,5 +65,10 @@ export class TodoList{
   findTodo(id){
     const todofound =this.todoList.find(todo=>todo.id === id)
     return todofound
+  }
+
+  rewrite(){
+    fs.writeFileSync(this.file,"")
+    fs.appendFileSync(this.file,JSON.stringify(this.todoList))
   }
 }

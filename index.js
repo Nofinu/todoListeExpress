@@ -30,8 +30,8 @@ app.get("/searchtodo",(req,res)=>{
 
 
 app.post("/addtodo",(req,res)=>{
-  const {titre,contenu,statut,date}={...req.body}
-  todoList.addTodo(titre,contenu,statut,date)
+  const {titre,contenu,date}={...req.body}
+  todoList.addTodo(titre,contenu,date)
   res.json(todoList.todoList[todoList.todoList.length-1])
 })
 
@@ -65,4 +65,5 @@ app.delete("/deletetodo/:id",(req,res)=>{
 
 app.listen(Port,function(){
   console.log('TodoList Api est lancée sur le port :'+Port)
+  todoList.start()
 })
