@@ -67,7 +67,6 @@ export class TodoList{
   }
 
   rewrite(){
-    fs.writeFileSync(this.file,"")
-    fs.appendFileSync(this.file,JSON.stringify(this.todoList))
+    fs.writeFileSync(this.file,JSON.stringify(this.todoList))
   }
 }
