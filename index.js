@@ -36,8 +36,8 @@ app.post("/addtodo",(req,res)=>{
 })
 
 app.put("/edittodo/:id",(req,res)=>{
-  const {titre,contenu,statut,date}={...req.body}
-  if(todoList.editTodo(req.params.id,titre,contenu,statut,date)){
+  const {titre,contenu,date}={...req.body}
+  if(todoList.editTodo(req.params.id,titre,contenu,date)){
     res.json({id:req.params.id,...req.body})
   }
   else{

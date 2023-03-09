@@ -18,13 +18,12 @@ export class TodoList{
     this.rewrite()
   }
 
-  editTodo(id,titre,contenu,statut,date){
+  editTodo(id,titre,contenu,date){
     const todoFound = this.findTodo(id)
     if(todoFound){
       todoFound.id = id
       todoFound.titre = titre? titre : todoFound.titre
       todoFound.contenu = contenu? contenu : todoFound.contenu
-      todoFound.statut = statut? statut : todoFound.statut
       todoFound.date = date? date : todoFound.date
       this.rewrite()
       return true
