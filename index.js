@@ -45,7 +45,7 @@ app.put("/edittodo/:id",(req,res)=>{
   }
 })
 
-app.put("/setstate/:id",(req,res)=>{
+app.patch("/setstate/:id",(req,res)=>{
   if(todoList.changeStatut(req.params.id)){
     res.end("le statut de la todo id : "+req.params.id+" a etet changé")
   }
